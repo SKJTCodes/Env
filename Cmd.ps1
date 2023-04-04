@@ -5,7 +5,7 @@ function e {
     [string] $Path
   )
   $newPath = Find-Env-Path $Path
-  write-host $newPath
+
   Push-Location $newPath
   explorer .
   Pop-Location
