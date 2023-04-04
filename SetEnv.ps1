@@ -35,6 +35,12 @@ write-info "List of Projects in Dev ($Env:DEVPATH): "
 $projs = Get-ChildItem -Directory -Path $Env:DEVPATH
 Foreach ($proj in $projs) {
   Write-Info " - $proj"
+  
+  $envObj = Get-ChildItem env:\ | Where-Object {$_.Name -eq $proj}
+  # if variable is not in global environment variable
+  if($null -eq $envObj){
+    New-Item -Path Env:$proj -Value "$ENV:DEVPATH/$proj" | Out-Null
+  }
 }
 Write-Info ""
 

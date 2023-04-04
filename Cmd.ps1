@@ -29,7 +29,7 @@ function setenv {
 function open {
   param($ProjName)
   
-  $projPath = "$Env:DEVPATH/$ProjName"
+  $projPath = Find-Env-Path $ProjName -envOnly $true
   # Open all relevant Software
   OpenDevSoft $projPath
 }

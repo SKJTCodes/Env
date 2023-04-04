@@ -9,7 +9,8 @@ Function Write-Info {
 
 Function Find-Env-Path {
   param(
-    [String] $Path
+    [String] $Path,
+    [Boolean] $envOnly
   )
   # Process Argument
   $ParsedPath = $Path.Replace("\", "/")
@@ -25,6 +26,9 @@ Function Find-Env-Path {
     $subPath = ,$envPath + $subPath
     $newPath = $subPath -join "/"
   } else {
+    if($envOnly){
+      write-Error "Not a Global Environment Variable: $Path"
+    }
     $newPath = $Path
   }
 
