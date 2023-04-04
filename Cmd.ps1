@@ -47,7 +47,7 @@ function cproj {
   Push-Location $projPath
   
   # Create Robot text file
-  Copy-Item $Env:SETENVPATH/README.md ./README.md
+  Copy-Item $Env:SETENVPATH/README_Tem.md ./README.md
 
   # Set Git
   git init
