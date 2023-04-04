@@ -2,32 +2,22 @@
 function e {
   param(
     [Parameter(Mandatory,ValueFromPipeline)]
-    [string[]] $Path
+    [string] $Path
   )
-  # Process Argument
-  $ParsedPath = $Path.Replace("\", "/")
-  $SplitPath = $ParsedPath -split '/'
-  $envName, $subPath = $SplitPath
+  $newPath = Find-Env-Path $Path
+  write-host $newPath
+  Push-Location $newPath
+  explorer .
+  Pop-Location
+}
 
-  $envObj = Get-ChildItem env:\ | Where-Object {$_.Name -eq $envName}
-  $envDontExist = $envObj -eq ""
-  write-host $envDontExist  # TODO: Returns false when suppose to be true
-  # If env exist
-  If(!$envDontExist){
-    $envPath = $envObj.Value
-    write-host $envPath
-  } else {
-    explorer $Path
-  }
-  
-  # $envPath = Get-ChildItem env:\ | Where-Object {$_.Name -eq $EnvName}
-  # $envExist = $envPath -eq ""
-  # if ($envExist) {
-
-  # }
-  # Push-Location "$Path"
-  # explorer .
-  # Pop-Location
+# Change Directory
+function d {
+  param(
+    [String] $Path
+  )
+  $newPath = Find-Env-Path $Path
+  Set-Location $newPath
 }
 
 # Open SetEnv script

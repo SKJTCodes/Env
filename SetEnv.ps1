@@ -26,6 +26,8 @@ write-info "Commands:
 setenv - Update SetEnv.ps1 script
 open - Open Dev folder, param: [projName]
 cproj - Create Project Folders, param: [projName]
+e - Open File Explorer, param: [path]
+d - Change Directory, param: [path]
 "
 
 # Show Current Apps
