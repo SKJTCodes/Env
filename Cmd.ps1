@@ -101,6 +101,6 @@ function Assert-FolderExists{
 function OpenDevSoft{
   param($projPath)
 
-  start-process PowerShell -argumentlist "-noExit", "-command", "set-location $projPath"
+  # start-process PowerShell -argumentlist "-noExit", "-command", "set-location $projPath"
   code -n $projPath
 }

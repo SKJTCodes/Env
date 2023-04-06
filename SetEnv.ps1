@@ -13,12 +13,19 @@ If(!(Test-Path $SetupDrive)){
   # Create Folders if dont exist
   write-Info("Creating Folder if don't exist ...
   ")
-  $FolderList = @($Env:PRODPATH, $Env:REPOPATH, $Env:DEVPATH)
+  $FolderList = @($Env:PRODPATH, $Env:DEVPATH)
   Foreach ($FPath in $FolderList) {
     If(!(Test-Path $FPath)){
-      New-Item -Path $FPath -ItemType Directory
+      New-Item -Path $FPath -ItemType Directory | Out-Null
     }
   }
+}
+# Link Repo Path to SetEnv Location
+If(!(Test-Path $RepoPath)){
+  # if repo path dont exist stop creation
+  write-warning "$RepoPath Don't exist, Repo Path not created."
+} else {
+  New-Item -ItemType Junction -Path $Env:REPOPATH -Target $RepoPath | Out-Null
 }
 
 # Show Available Commands
