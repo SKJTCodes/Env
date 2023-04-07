@@ -49,7 +49,6 @@ function cproj {
 
   # Create Robot text file
   Copy-Item $Env:SETENVPATH/README_Tem.md ./README.md
-  # TODO: Readme was not committed
   if($type = "python"){
     # Set Git
     git init
