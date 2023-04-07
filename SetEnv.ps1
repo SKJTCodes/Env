@@ -25,14 +25,16 @@ If(!(Test-Path $RepoPath)){
   # if repo path dont exist stop creation
   write-warning "$RepoPath Don't exist, Repo Path not created."
 } else {
-  New-Item -ItemType Junction -Path $Env:REPOPATH -Target $RepoPath | Out-Null
+  If(!(Test-Path $Env:REPOPATH)){
+    New-Item -ItemType Junction -Path $Env:REPOPATH -Target $RepoPath | Out-Null
+  }
 }
 
 # Show Available Commands
 write-info "Commands:
 setenv - Update SetEnv.ps1 script
 open - Open Dev folder, param: [projName]
-cproj - Create Project Folders, param: [projName]
+cproj - Create Project Folders, param: [projName, Type(react, python)]
 e - Open File Explorer, param: [path]
 d - Change Directory, param: [path]
 "

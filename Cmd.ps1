@@ -36,8 +36,7 @@ function open {
 
 # Create Project Folder
 function cproj {
-  param($ProjName)
-
+  param($ProjName, $Type)
   # Create Git Repo
   cgit("$ProjName.git")
   $repoPath = "$Env:REPOPATH/$ProjName.git"
@@ -45,17 +44,21 @@ function cproj {
   $projPath = "$Env:DEVPATH/$ProjName"
   New-Item -Path $projPath -ItemType Directory
   Push-Location $projPath
-  
+
+  Add-Proj-Template $projPath $Type
+
   # Create Robot text file
   Copy-Item $Env:SETENVPATH/README_Tem.md ./README.md
+  # TODO: Readme was not committed
+  if($type = "python"){
+    # Set Git
+    git init
+  }
 
-  # Set Git
-  git init
-  git remote add "repo" "$repoPath"
   git add .
   git commit -m "Initial Commit"
-
-  git branch --set-upstream-to repo master
+  git remote add "repo" "$repoPath"
+  # git branch --set-upstream-to repo master
   git push --set-upstream repo master
 
   Pop-Location
@@ -75,6 +78,21 @@ function cgit{
   git init --bare  
   Pop-Location
   return "$Env:REPOPATH/$gitName"
+}
+
+# Create template for project
+function Add-Proj-Template {
+  param($Path, $Type)
+  Push-Location $Path
+  if ($Type = 'react'){
+    npx create-react-app .
+  } elseif($Type = 'python'){
+    write-host "$Type To Be Implemented ..."
+  } else {
+    write-error "$Type does not exist"
+  }
+
+  Pop-Location
 }
 
 # Check if folder exist
